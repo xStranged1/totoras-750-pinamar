@@ -1,0 +1,92 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+  Paleta pensada para Pinamar: pinos, mar y arena.
+  pino   #11302A  texto y botones principales
+  mar    #1F6F8B  detalles y foco
+  arena  #E7DDC6  paneles suaves
+  niebla #F3F7F5  fondo
+  whatsapp #0E8A4B  llamados a la acción
+*/
+:root {
+  --radius: 0.75rem;
+  --background: #f3f7f5;
+  --foreground: #11302a;
+  --card: #ffffff;
+  --card-foreground: #11302a;
+  --popover: #ffffff;
+  --popover-foreground: #11302a;
+  --primary: #11302a;
+  --primary-foreground: #f3f7f5;
+  --secondary: #e4ece8;
+  --secondary-foreground: #11302a;
+  --muted: #e9efec;
+  --muted-foreground: #4a6159;
+  --accent: #dbe9ee;
+  --accent-foreground: #11302a;
+  --destructive: #b42318;
+  --border: #d2ddd8;
+  --input: #c2d0ca;
+  --ring: #1f6f8b;
+  --whatsapp: #0e8a4b;
+  --sea: #1f6f8b;
+  --sand: #e7ddc6;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-whatsapp: var(--whatsapp);
+  --color-sea: var(--sea);
+  --color-sand: var(--sand);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+}

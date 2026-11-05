@@ -1,0 +1,377 @@
+---
+import {
+  Armchair,
+  BedDouble,
+  CookingPot,
+  Coffee,
+  Fan,
+  Flame,
+  Info,
+  MapPin,
+  MessageCircle,
+  PawPrint,
+  Sandwich,
+  Snowflake,
+  Sparkles,
+  Tv,
+  Utensils,
+  Wifi,
+  CalendarDays,
+  Clock,
+} from "lucide-react";
+
+import Layout from "@/layouts/Layout.astro";
+import UnitCard from "@/components/UnitCard";
+import ConsultForm from "@/components/ConsultForm";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  GENERIC_MESSAGE,
+  MAX_STAY_DAYS,
+  SITE,
+  entrancePhoto,
+  heroPhoto,
+  units,
+  waLink,
+} from "@/config";
+
+const whatsappHref = waLink(GENERIC_MESSAGE);
+
+// Distancias desde Totoras 750. La posición usa una escala de raíz cuadrada
+// para que la plaza (50 m) y el Camino parque "Los pioneros" (800 m) entren en la misma línea.
+const ruler = [
+  { label: "Totoras 750", distance: "Supermercado al lado y restaurante enfrente", pos: 0 },
+  { label: "Plaza", distance: "50 m", pos: 20 },
+  { label: "Avenida Bunge", distance: "500 m", pos: 64 },
+  { label: `Camino parque "Los pioneros"`, distance: "800m", pos: 100 },
+];
+
+const amenities = [
+  { icon: CookingPot, label: "Cocina equipada con utensilios" },
+  { icon: Coffee, label: "Pava eléctrica" },
+  { icon: Sandwich, label: "Sandwichera y licuadora" },
+  { icon: Utensils, label: "Heladera y microondas" },
+  { icon: Wifi, label: "WiFi" },
+  { icon: Tv, label: "Smart TV con Netflix" },
+  { icon: Snowflake, label: "Aire acondicionado" },
+  { icon: Fan, label: "Ventiladores" },
+  { icon: Flame, label: "Calefacción" },
+  { icon: BedDouble, label: "Sommiers con cobertores y mantas" },
+];
+
+const nav = [
+  { href: "#alojamientos", label: "Alojamientos" },
+  { href: "#comodidades", label: "Comodidades" },
+  { href: "#ubicacion", label: "Ubicación" },
+  { href: "#condiciones", label: "Condiciones" },
+];
+---
+
+<Layout>
+  <!-- Encabezado -->
+  <header class="sticky top-0 z-40 border-b bg-background/90 backdrop-blur">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+      <a href="#inicio" class="font-display text-xl font-semibold tracking-tight">
+        Totoras 750
+        <span class="font-normal text-muted-foreground">Pinamar</span>
+      </a>
+      <nav aria-label="Principal" class="hidden items-center gap-6 text-sm font-medium md:flex">
+        {nav.map((item) => (
+          <a href={item.href} class="text-muted-foreground transition-colors hover:text-foreground">
+            {item.label}
+          </a>
+        ))}
+      </nav>
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class={buttonVariants({ variant: "whatsapp", size: "sm" })}
+      >
+        <MessageCircle />
+        Consultar por WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <!-- Portada -->
+    <section class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-10 sm:px-6 lg:grid-cols-[1.1fr_0.9fr] lg:gap-14 lg:py-16">
+      <div class="space-y-6">
+        <h1 class="text-4xl font-semibold leading-[1.05] sm:text-5xl lg:text-6xl">
+          Departamentos en Pinamar para tus vacaciones
+        </h1>
+        <p class="max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+          Dos monoambientes y un departamento para familias o grupos de jóvenes, en Totoras 750.
+          Supermercado al lado, restaurante enfrente y el Camino parque "Los pioneros" a 800 m.
+        </p>
+        <div class="flex flex-wrap gap-3 pt-1">
+          <a
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            class={buttonVariants({ variant: "whatsapp", size: "lg" })}
+          >
+            <MessageCircle />
+            Consultar por WhatsApp
+          </a>
+          <a href="#alojamientos" class={buttonVariants({ variant: "outline", size: "lg" })}>
+            Ver alojamientos
+          </a>
+        </div>
+        <p class="text-sm text-muted-foreground">
+          Estadías cortas, de hasta {MAX_STAY_DAYS} días. Fechas y precios a consultar.
+        </p>
+      </div>
+
+      <div class="relative">
+        <img
+          src={heroPhoto.src}
+          alt={heroPhoto.alt}
+          width="960"
+          height="1280"
+          fetchpriority="high"
+          class="aspect-[4/5] w-full rounded-3xl object-cover shadow-xl"
+        />
+      </div>
+    </section>
+
+    <!-- Regla de distancias -->
+    <section aria-labelledby="alrededor" class="bg-primary text-primary-foreground">
+      <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
+        <h2 id="alrededor" class="max-w-2xl text-2xl font-semibold sm:text-3xl">
+          Todo lo que necesitás, cerca de la puerta
+        </h2>
+
+        <!-- Mobile: lista vertical -->
+        <ol class="mt-8 space-y-6 border-l-2 border-primary-foreground/30 pl-6 md:hidden">
+          {ruler.map((stop) => (
+            <li class="relative">
+              <span class="absolute -left-[31px] top-1.5 size-3 rounded-full bg-sand" aria-hidden="true" />
+              <p class="font-display text-xl font-semibold">{stop.label}</p>
+              <p class="text-primary-foreground/80">{stop.distance}</p>
+            </li>
+          ))}
+        </ol>
+
+        <!-- Desktop: línea horizontal -->
+        <div class="relative mt-14 hidden h-32 md:block">
+          <div class="absolute left-0 right-0 top-3 h-0.5 bg-primary-foreground/30" aria-hidden="true"></div>
+          {ruler.map((stop, i) => {
+            const isFirst = i === 0;
+            const isLast = i === ruler.length - 1;
+            return (
+              <div
+                class={`absolute top-0 w-48 ${isLast ? "text-right" : ""}`}
+                style={
+                  isLast
+                    ? `right: 0`
+                    : `left: ${stop.pos}%; transform: translateX(${isFirst ? "0" : "-50%"})`
+                }
+              >
+                <span
+                  class={`block size-6 rounded-full border-4 border-primary bg-sand ${isLast ? "ml-auto" : isFirst ? "" : "mx-auto"}`}
+                  aria-hidden="true"
+                />
+                <p class={`mt-4 font-display text-xl font-semibold ${isFirst || isLast ? "" : "text-center"}`}>
+                  {stop.label}
+                </p>
+                <p class={`text-primary-foreground/80 ${isFirst || isLast ? "" : "text-center"}`}>
+                  {stop.distance}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+
+    <!-- Alojamientos -->
+    <section id="alojamientos" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+      <div class="max-w-2xl space-y-3">
+        <h2 class="text-3xl font-semibold sm:text-4xl">Elegí tu alojamiento</h2>
+        <p class="text-lg text-muted-foreground">
+          Dos monoambientes y un departamento. Las fechas disponibles y los precios cambian según la
+          temporada, así que consultanos por WhatsApp.
+        </p>
+      </div>
+
+      <div class="mt-12 space-y-16 lg:space-y-24">
+        {units.map((unit, i) => (
+          <UnitCard
+            client:visible
+            unit={unit}
+            whatsappHref={waLink(unit.whatsappMessage)}
+            reverse={i % 2 === 1}
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Comodidades -->
+    <section id="comodidades" class="bg-sand/45">
+      <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+        <div class="max-w-2xl space-y-3">
+          <h2 class="text-3xl font-semibold sm:text-4xl">Comodidades en todos los departamentos</h2>
+          <p class="text-lg text-muted-foreground">
+            Llegás, dejás las valijas y ya podés cocinar, mirar una serie o descansar.
+          </p>
+        </div>
+
+        <ul class="mt-10 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
+          {amenities.map((item) => (
+            <li class="flex items-center gap-3">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-background text-sea shadow-sm">
+                <item.icon className="size-5" />
+              </span>
+              <span class="font-medium">{item.label}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-12 border-t border-primary/15 pt-8">
+          <h3 class="text-xl font-semibold">Servicios opcionales</h3>
+          <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+            <li class="flex items-center gap-3">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-background text-sea shadow-sm">
+                <Sparkles className="size-5" />
+              </span>
+              <span class="font-medium">Servicio de blanquería y ropa de cama</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-background text-sea shadow-sm">
+                <Armchair className="size-5" />
+              </span>
+              <span class="font-medium">Alquiler de reposeras</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ubicación -->
+    <section id="ubicacion" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+      <div class="grid gap-10 lg:grid-cols-2 lg:gap-14">
+        <div class="space-y-6">
+          <h2 class="text-3xl font-semibold sm:text-4xl">Dónde estamos</h2>
+          <div class="flex items-start gap-3">
+            <MapPin className="mt-1 size-5 shrink-0 text-sea" />
+            <address class="text-lg not-italic leading-relaxed">
+              <strong class="font-semibold">Totoras 750</strong>, entre Mengacho y De La Trucha,
+              Pinamar.
+            </address>
+          </div>
+          <p class="max-w-prose text-lg leading-relaxed text-muted-foreground">
+            Al lado hay un supermercado, enfrente un restaurante y a 50 metros una plaza. La Avenida
+            Bunge queda a 500 metros y el Camino parque "Los pioneros" a 800 m.
+          </p>
+          <Button asChild variant="default" size="lg">
+            <a href={SITE.mapsUrl} target="_blank" rel="noopener noreferrer">
+              <MapPin />
+              Abrir en Google Maps
+            </a>
+          </Button>
+          <figure>
+            <img
+              src={entrancePhoto.src}
+              alt={entrancePhoto.alt}
+              width="960"
+              height="1280"
+              loading="lazy"
+              class="aspect-[16/10] w-full rounded-2xl object-cover"
+            />
+            <figcaption class="mt-2 text-sm text-muted-foreground">
+              Así es la entrada: buscá el cartel de Totoras 750.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="overflow-hidden rounded-2xl border bg-muted lg:min-h-[28rem]">
+          <iframe
+            title="Mapa de Totoras 750, Pinamar"
+            src={SITE.mapsEmbed}
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="h-80 w-full lg:h-full lg:min-h-[28rem]"
+          ></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Condiciones -->
+    <section id="condiciones" class="bg-secondary/70">
+      <div class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+        <h2 class="max-w-2xl text-3xl font-semibold sm:text-4xl">Condiciones de alquiler</h2>
+
+        <div class="mt-10 grid gap-5 md:grid-cols-3">
+          <Card>
+            <CardHeader>
+              <Clock className="size-6 text-sea" />
+              <CardTitle>Estadías cortas</CardTitle>
+            </CardHeader>
+            <CardContent className="text-muted-foreground">
+              Por lo general alquilamos por hasta {MAX_STAY_DAYS} días.
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <PawPrint className="size-6 text-sea" />
+              <CardTitle>Sin mascotas</CardTitle>
+            </CardHeader>
+            <CardContent className="text-muted-foreground">
+              No se aceptan mascotas en ninguno de los departamentos.
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CalendarDays className="size-6 text-sea" />
+              <CardTitle>Fechas y precios</CardTitle>
+            </CardHeader>
+            <CardContent className="text-muted-foreground">
+              Las fechas disponibles y los precios pueden variar. Consultanos por WhatsApp.
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consulta -->
+    <section id="consultar" class="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+      <div class="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
+        <div class="space-y-4">
+          <h2 class="text-3xl font-semibold sm:text-4xl">¿Cuándo querés venir?</h2>
+          <p class="max-w-md text-lg leading-relaxed text-muted-foreground">
+            Completá los datos y se arma el mensaje en WhatsApp. Te respondemos con la
+            disponibilidad y el precio para tus fechas.
+          </p>
+          <p class="text-muted-foreground">
+            También podés escribirnos directo al <strong class="font-semibold text-foreground">{SITE.whatsappDisplay}</strong>.
+          </p>
+        </div>
+        <Card>
+          <CardContent>
+            <ConsultForm client:visible />
+          </CardContent>
+        </Card>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t bg-primary text-primary-foreground">
+    <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 sm:px-6 md:flex-row md:items-center md:justify-between">
+      <div>
+        <p class="font-display text-lg font-semibold">Totoras 750, Pinamar</p>
+        <p class="text-sm text-primary-foreground/75">Entre Mengacho y De La Trucha</p>
+      </div>
+      <a
+        href={whatsappHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 font-semibold underline-offset-4 hover:underline"
+      >
+        <MessageCircle className="size-5" />
+        WhatsApp {SITE.whatsappDisplay}
+      </a>
+    </div>
+  </footer>
+</Layout>
