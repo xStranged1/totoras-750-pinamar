@@ -30,8 +30,12 @@ export interface Photo {
   alt: string;
 }
 
+export const BASE = import.meta.env.BASE_URL.endsWith("/")
+  ? import.meta.env.BASE_URL
+  : `${import.meta.env.BASE_URL}/`;
+
 const img = (file: string, alt: string): Photo => ({
-  src: `/images/${file}`,
+  src: `${BASE}images/${file}`,
   alt,
 });
 

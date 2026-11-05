@@ -1,6 +1,6 @@
 ---
 import "@/styles/global.css";
-import { SITE } from "@/config";
+import { SITE, BASE } from "@/config";
 
 interface Props {
   title?: string;
@@ -13,7 +13,7 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = new URL("/images/12-dormitorio-king-balcon.jpg", Astro.site);
+const ogImage = new URL(`${BASE}images/12-dormitorio-king-balcon.jpg`, Astro.site);
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -42,7 +42,7 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={`${BASE}favicon.svg`} type="image/svg+xml" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="es_AR" />
